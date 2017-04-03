@@ -8,6 +8,21 @@ import re
 from faker import Factory
 from faker.providers.ssn.hr_HR import Provider as HrProvider, checksum as hr_checksum
 from faker.providers.ssn.pt_BR import Provider as PtProvider, checksum as pt_checksum
+from faker.providers.ssn.en_US import Provider as EnProvider
+
+
+class TestEnUS(unittest.TestCase):
+
+    def test_ssn_valid(self):
+        provider = EnProvider(None)
+        for i in range(1000):
+            ssn = provider.ssn()
+            self.assertEqual(len(ssn), 11)
+            self.assertNotEqual(ssn[0], '9')
+            self.assertNotEqual(ssn[0:3], '666')
+            self.assertNotEqual(ssn[0:3], '000')
+            self.assertNotEqual(ssn[4:6], '00')
+            self.assertNotEqual(ssn[7:11], '0000')
 
 
 class TestHrHR(unittest.TestCase):
